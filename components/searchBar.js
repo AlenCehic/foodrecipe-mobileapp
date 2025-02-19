@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect} from "react";
 import {
     StyleSheet,
     TextInput,
@@ -7,15 +7,17 @@ import {
     FlatList,
     Text,
     Image,
-    ActivityIndicator
+    ActivityIndicator,
+    TouchableWithoutFeedback
 } from "react-native";
-import { Feather, Entypo } from "@expo/vector-icons";
+import {Feather, Entypo} from "@expo/vector-icons";
 
 const SearchBar = () => {
     const [searchPhrase, setSearchPhrase] = useState("");
     const [clicked, setClicked] = useState(false);
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         if (searchPhrase.length > 0) {
@@ -27,93 +29,111 @@ const SearchBar = () => {
 
     const fetchData = async () => {
         setLoading(true);
+        setError(null);
         try {
-            const response = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${searchPhrase}`);
+            const response = await fetch(
+                `https://www.themealdb.com/api/json/v1/1/search.php?s=${searchPhrase}`
+            );
+
+            if (!response.ok) {
+                throw new Error("Network response was not ok");
+            }
             const result = await response.json();
             setData(result.meals || []);
         } catch (error) {
-            console.error("Fehler beim Laden der Daten: ", error);
+            console.error("Fehler beim Laden der Daten:", error);
+            setError("Error fetching data. Please try again.");
         } finally {
             setLoading(false);
         }
     };
 
     return (
-        <View style={styles.container}>
-            <View style={clicked ? styles.searchBar_clicked : styles.searchBar_unclicked}>
-                <Feather name="search" size={20} color="#FF5E00" style={{ marginLeft: 10 }} />
-                <TextInput
-                    style={styles.input}
-                    placeholder="Search"
-                    value={searchPhrase}
-                    onChangeText={setSearchPhrase}
-                    onFocus={() => setClicked(true)}
-                />
-                {clicked && (
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+            <View style={styles.container}>
+                <View style={styles.searchBar}>
+                    <Feather name="search" size={20} color="#FF5E00" style={styles.searchIcon}/>
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Your wished meal"
+                        value={searchPhrase}
+                        onChangeText={setSearchPhrase}
+                        onFocus={() => setClicked(true)}
+                        onBlur={() => setClicked(false)}
+                    />
                     <Entypo
                         name="cross"
                         size={20}
                         color="#FF5E00"
-                        style={{ marginRight: 10 }}
+                        style={[styles.crossIcon, {opacity: searchPhrase ? 1 : 0}]}
                         onPress={() => {
                             setSearchPhrase("");
                             Keyboard.dismiss();
                             setClicked(false);
                         }}
                     />
-                )}
+                </View>
+
+                <FlatList
+                    keyboardShouldPersistTaps="handled"
+                    keyboardDismissMode="on-drag"
+                    data={data}
+                    showsVerticalScrollIndicator={false}
+                    keyExtractor={(item) => item.idMeal}
+                    renderItem={({item}) => (
+                        <View style={styles.item}>
+                            <Image source={{uri: item.strMealThumb}} style={styles.image}/>
+                            <Text style={styles.text}>{item.strMeal}</Text>
+                        </View>
+                    )}
+                    ListEmptyComponent={
+                        !loading && searchPhrase.length > 0 ? (
+                            <Text style={styles.noResultsText}>No meals found.</Text>
+                        ) : null
+                    }
+                />
+
             </View>
-            {loading && <ActivityIndicator size="large" color="#FF5E00" />}
-            <FlatList
-                data={data}
-                keyExtractor={(item) => item.idMeal}
-                renderItem={({ item }) => (
-                    <View style={styles.item}>
-                        <Image source={{ uri: item.strMealThumb }} style={styles.image} />
-                        <Text style={styles.text}>{item.strMeal}</Text>
-                    </View>
-                )}
-            />
-        </View>
+        </TouchableWithoutFeedback>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
-        margin: 15,
         justifyContent: "flex-start",
         alignItems: "center",
         flexDirection: "column",
         width: "100%",
     },
-    searchBar_unclicked: {
+    searchBar: {
         flexDirection: "row",
         width: "90%",
+        height: 45,
+        marginTop: 25,
         backgroundColor: "#d9dbda",
         borderRadius: 15,
         alignItems: "center",
         paddingHorizontal: 10,
+        position: "relative",
     },
-    searchBar_clicked: {
-        flexDirection: "row",
-        width: "90%",
-        backgroundColor: "#d9dbda",
-        borderRadius: 15,
-        alignItems: "center",
-        justifyContent: "space-between",
-        paddingHorizontal: 10,
+    searchIcon: {
+        marginLeft: 10,
     },
     input: {
         fontSize: 18,
         marginLeft: 10,
-        width: "80%",
+        flex: 1,
+    },
+    crossIcon: {
+        position: "absolute",
+        right: 10,
+        opacity: 0,
     },
     item: {
         flexDirection: "row",
         alignItems: "center",
         padding: 10,
-        width: 300,
-        borderBottomWidth: 1,
+        width: 360,
         borderBottomColor: "#ccc",
     },
     image: {
@@ -124,6 +144,17 @@ const styles = StyleSheet.create({
     },
     text: {
         fontSize: 18,
+    },
+    errorText: {
+        color: "red",
+        marginTop: 10,
+        fontSize: 16,
+    },
+    noResultsText: {
+        textAlign: "center",
+        marginTop: 20,
+        fontSize: 16,
+        color: "gray",
     },
 });
 
