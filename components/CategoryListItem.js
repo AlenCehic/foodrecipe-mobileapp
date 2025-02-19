@@ -1,4 +1,3 @@
-// components/CategoryListItem.js
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { useRouter } from "expo-router";
 
