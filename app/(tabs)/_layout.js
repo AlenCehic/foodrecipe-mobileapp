@@ -34,7 +34,7 @@ export default function TabsLayout() {
                         tabBarIcon: ({ color, focused }) => (
                             <BottomNavIcon
                                 name={{ icon, iconFocused }}
-                                color={color}
+                                color="#FF5E00"
                                 focused={focused}
                             />
                         ),

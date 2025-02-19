@@ -1,30 +1,41 @@
-import { View, Text, StyleSheet } from "react-native";
+import {View, Text, StyleSheet, Image} from "react-native";
+import SearchComponent from "../../../components/searchBar";
+import SearchBar from "../../../components/searchBar";
+import {useState} from "react";
 
 export default function HomeScreen() {
+    const [searchPhrase, setSearchPhrase] = useState("");
   return (
-    <View style={homeScreenStyle.container}>
-      <Text style={homeScreenStyle.title}>Search</Text>
-      <View style={homeScreenStyle.line} />
-      <Text>This is the Search Screen</Text>
-    </View>
+      <View style={searchStyle.container}>
+          <Image
+            style={searchStyle.logo}
+            source={require('../../../assets/cooker.jpg')}
+          />
+          <Text style={searchStyle.title}>What would you like to explore<Text style={searchStyle.details}>?</Text></Text>
+          <SearchBar searchPhrase={searchPhrase} setSearchPhrase={setSearchPhrase}/>
+      </View>
   )
 }
 
-const homeScreenStyle = StyleSheet.create({
+const searchStyle = StyleSheet.create({
     container: {
       flex: 1,
-      justifyContent: "center",
-      alignItems: "center"
+      alignItems: "center",
+        top: 200,
+
+    },
+    logo: {
+        width: 20,
+        height: 20,
     },
     title: {
       fontSize: 22,
       fontWeight: 'bold',
     },
-    line: {
-      width: '60%',
-      height: 1,
-      backgroundColor: 'gray',
-      marginVertical: 10,
-      opacity: 0.5
+    details: {
+        color: "#FF5E00"
+    },
+    bar: {
+        width: 100,
     }
   })
