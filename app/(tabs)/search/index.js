@@ -15,8 +15,8 @@ export default function HomeScreen() {
     const [searchPhrase, setSearchPhrase] = useState("");
 
     return (
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
             <View style={searchStyle.container}>
+                <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
                 <View style={searchStyle.headerContainer}>
                     <View style={searchStyle.imageContainer}>
                         <Image style={searchStyle.logo} source={require("../../../assets/cooker.jpg")}/>
@@ -28,11 +28,11 @@ export default function HomeScreen() {
                         </Text>
                     </View>
                 </View>
+                </TouchableWithoutFeedback>
                 <View style={searchStyle.searchContainer}>
                     <SearchBar searchPhrase={searchPhrase} setSearchPhrase={setSearchPhrase}/>
                 </View>
             </View>
-        </TouchableWithoutFeedback>
     );
 }
 
