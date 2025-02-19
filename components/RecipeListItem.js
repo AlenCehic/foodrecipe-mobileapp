@@ -1,9 +1,13 @@
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useRouter } from "expo-router";
+import { useFavorites } from "../context/FavoritesContext";
 
 export default function RecipeListItem({ item }) {
     const router = useRouter();
+    const { favorites, toggleFavorite } = useFavorites()
+
+    const isFavorite = favorites.some((fav) => fav.idMeal === item.idMeal)
 
     return (
         <TouchableOpacity
@@ -29,7 +33,9 @@ export default function RecipeListItem({ item }) {
                 <Text style={styles.recipeName}>{item.strMeal}</Text>
                 <Text style={styles.recipeCategory}>{item.strCategory}</Text>
             </View>
-            <Ionicons name="heart-outline" size={24} color="black" />
+            <TouchableOpacity onPress={() => toggleFavorite(item)}>
+                <Ionicons name={isFavorite ? "heart" : "heart-outline"} size={24} color="red" />
+            </TouchableOpacity>
         </TouchableOpacity>
     );
 }

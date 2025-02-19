@@ -1,30 +1,38 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, FlatList } from "react-native";
+import RecipeListItem from "../../../components/RecipeListItem";
+import { useFavorites } from "../../../context/FavoritesContext";
 
 export default function HomeScreen() {
-  return (
-    <View style={homeScreenStyle.container}>
-      <Text style={homeScreenStyle.title}>Favorites</Text>
-      <View style={homeScreenStyle.line} />
-      <Text>This is the Favorites Screen</Text>
-    </View>
-  )
+    const { favorites } = useFavorites()
+
+    if (favorites.length === 0) {
+        return (
+            <View style={styles.container}>
+                <Text style={styles.noFavoritesText}>No favorites yet!</Text>
+            </View>
+        )
+    }
+
+    return (
+        <View style={styles.container}>
+            <FlatList
+                data={favorites}
+                renderItem={({ item }) => <RecipeListItem item={item} />}
+                keyExtractor={(item) => item.idMeal.toString()}
+            />
+        </View>
+    )
 }
 
-const homeScreenStyle = StyleSheet.create({
+const styles = StyleSheet.create({
     container: {
-      flex: 1,
-      justifyContent: "center",
-      alignItems: "center"
+        flex: 1,
+        padding: 16,
+        backgroundColor: "#fff",
     },
-    title: {
-      fontSize: 22,
-      fontWeight: 'bold',
+    noFavoritesText: {
+        fontSize: 18,
+        textAlign: "center",
+        marginTop: 20,
     },
-    line: {
-      width: '60%',
-      height: 1,
-      backgroundColor: 'gray',
-      marginVertical: 10,
-      opacity: 0.5
-    }
-  })
+})
