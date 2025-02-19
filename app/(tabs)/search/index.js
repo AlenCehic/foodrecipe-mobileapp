@@ -1,41 +1,73 @@
-import {View, Text, StyleSheet, Image} from "react-native";
-import SearchComponent from "../../../components/searchBar";
+import {
+    View,
+    Text,
+    StyleSheet,
+    Image,
+    Keyboard,
+    TouchableWithoutFeedback,
+    KeyboardAvoidingView,
+    Platform
+} from "react-native";
 import SearchBar from "../../../components/searchBar";
 import {useState} from "react";
 
 export default function HomeScreen() {
     const [searchPhrase, setSearchPhrase] = useState("");
-  return (
-      <View style={searchStyle.container}>
-          <Image
-            style={searchStyle.logo}
-            source={require('../../../assets/cooker.jpg')}
-          />
-          <Text style={searchStyle.title}>What would you like to explore<Text style={searchStyle.details}>?</Text></Text>
-          <SearchBar searchPhrase={searchPhrase} setSearchPhrase={setSearchPhrase}/>
-      </View>
-  )
+
+    return (
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+            <View style={searchStyle.container}>
+                <View style={searchStyle.headerContainer}>
+                    <View style={searchStyle.imageContainer}>
+                        <Image style={searchStyle.logo} source={require("../../../assets/cooker.jpg")}/>
+                    </View>
+                    <View style={searchStyle.titleContainer}>
+                        <Text style={searchStyle.title}>
+                            Hey<Text style={searchStyle.details}>!</Text>{"\n"}What are{"\n"}we cooking{"\n"}
+                            today<Text style={searchStyle.details}>?</Text>
+                        </Text>
+                    </View>
+                </View>
+                <View style={searchStyle.searchContainer}>
+                    <SearchBar searchPhrase={searchPhrase} setSearchPhrase={setSearchPhrase}/>
+                </View>
+            </View>
+        </TouchableWithoutFeedback>
+    );
 }
 
 const searchStyle = StyleSheet.create({
     container: {
-      flex: 1,
-      alignItems: "center",
-        top: 200,
-
+        flex: 1,
+        backgroundColor: "white",
+    },
+    headerContainer: {
+        flexDirection: "row",
+        alignItems: "flex-start",
+        width: "99%",
+        marginBottom: "5%",
     },
     logo: {
-        width: 20,
-        height: 20,
+        width: 240,
+        height: 200,
+        marginRight: 10,
+    },
+    imageContainer: {
+        top: "3%",
+    },
+    titleContainer: {
+        flex: 1,
+        top: "20%"
     },
     title: {
-      fontSize: 22,
-      fontWeight: 'bold',
+        fontSize: 24,
+        fontWeight: "bold",
+        textAlign: "left",
     },
     details: {
-        color: "#FF5E00"
+        color: "#FF5E00",
     },
-    bar: {
-        width: 100,
-    }
-  })
+    searchContainer: {
+        flex: 1,
+    },
+});
