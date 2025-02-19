@@ -52,7 +52,6 @@ const SearchBar = () => {
 
     return (
         <SafeAreaView style={styles.safeArea}>
-            <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
                 <View style={styles.container}>
                     <View style={styles.searchBar}>
                         <Feather name="search" size={20} color="#FF5E00" style={styles.searchIcon}/>
@@ -98,7 +97,6 @@ const SearchBar = () => {
                         contentContainerStyle={{paddingBottom: 10}}
                     />
                 </View>
-            </TouchableWithoutFeedback>
         </SafeAreaView>
     );
 };
