@@ -12,7 +12,7 @@ export default function RecipeListItem({ item }) {
                 router.push({
                     pathname: "/details",
                     params: {
-                        id: item.idMeal,    
+                        id: item.idMeal,
                         name: item.strMeal,
                         category: item.strCategory,
                         area: item.strArea,
@@ -29,7 +29,7 @@ export default function RecipeListItem({ item }) {
                 <Text style={styles.recipeName}>{item.strMeal}</Text>
                 <Text style={styles.recipeCategory}>{item.strCategory}</Text>
             </View>
-            <Ionicons name="heart-outline" size={24} color="black" />
+            <Ionicons name="heart-outline" size={24} color="#FF5E00" style={styles.heartIcon} />
         </TouchableOpacity>
     );
 }
@@ -39,28 +39,38 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "space-between",
-        padding: 12,
-        marginVertical: 6,
+        padding: 14,
+        marginVertical: 8,
         backgroundColor: "#fff",
-        borderRadius: 10,
+        borderRadius: 12,
         borderWidth: 1,
-        borderColor: "black",
+        borderColor: "#ddd",
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 4,
+        elevation: 4,
     },
     image: {
-        width: 80,
-        height: 80,
-        borderRadius: 10,
+        width: 90,
+        height: 90,
+        borderRadius: 12,
     },
     textContainer: {
         flex: 1,
-        marginLeft: 12,
+        marginLeft: 14,
     },
     recipeName: {
-        fontSize: 16,
+        fontSize: 18,
         fontWeight: "bold",
+        color: "#333",
     },
     recipeCategory: {
         fontSize: 14,
-        color: "#666",
+        color: "#888",
+        marginTop: 4,
+    },
+    heartIcon: {
+        marginRight: 10,
     },
 });

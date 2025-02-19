@@ -8,9 +8,11 @@ import {
     Text,
     Image,
     ActivityIndicator,
-    TouchableWithoutFeedback
+    TouchableWithoutFeedback,
+    SafeAreaView
 } from "react-native";
 import {Feather, Entypo} from "@expo/vector-icons";
+import RecipeListItem from "./RecipeListItem";
 
 const SearchBar = () => {
     const [searchPhrase, setSearchPhrase] = useState("");
@@ -49,67 +51,74 @@ const SearchBar = () => {
     };
 
     return (
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-            <View style={styles.container}>
-                <View style={styles.searchBar}>
-                    <Feather name="search" size={20} color="#FF5E00" style={styles.searchIcon}/>
-                    <TextInput
-                        style={styles.input}
-                        placeholder="Your wished meal"
-                        value={searchPhrase}
-                        onChangeText={setSearchPhrase}
-                        onFocus={() => setClicked(true)}
-                        onBlur={() => setClicked(false)}
-                    />
-                    <Entypo
-                        name="cross"
-                        size={20}
-                        color="#FF5E00"
-                        style={[styles.crossIcon, {opacity: searchPhrase ? 1 : 0}]}
-                        onPress={() => {
-                            setSearchPhrase("");
-                            Keyboard.dismiss();
-                            setClicked(false);
-                        }}
+        <SafeAreaView style={styles.safeArea}>
+            <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+                <View style={styles.container}>
+                    <View style={styles.searchBar}>
+                        <Feather name="search" size={20} color="#FF5E00" style={styles.searchIcon}/>
+                        <TextInput
+                            style={styles.input}
+                            placeholder="Your wished meal"
+                            value={searchPhrase}
+                            onChangeText={setSearchPhrase}
+                            onFocus={() => setClicked(true)}
+                            onBlur={() => setClicked(false)}
+                        />
+                        <Entypo
+                            name="cross"
+                            size={20}
+                            color="#FF5E00"
+                            style={[styles.crossIcon, {opacity: searchPhrase ? 1 : 0}]}
+                            onPress={() => {
+                                setSearchPhrase("");
+                                Keyboard.dismiss();
+                                setClicked(false);
+                            }}
+                        />
+                    </View>
+
+                    {loading && <ActivityIndicator size="large" color="#FF5E00" style={styles.loader}/>}
+
+                    <FlatList
+                        keyboardShouldPersistTaps="handled"
+                        keyboardDismissMode="on-drag"
+                        data={data}
+                        showsVerticalScrollIndicator={false}
+                        keyExtractor={(item) => item.idMeal}
+                        renderItem={({item}) => (
+                            <View style={styles.item}>
+                                <RecipeListItem item={item} />
+                            </View>
+                        )}
+                        ListEmptyComponent={
+                            !loading && searchPhrase.length > 0 ? (
+                                <Text style={styles.noResultsText}>No meals found.</Text>
+                            ) : null
+                        }
+                        contentContainerStyle={{paddingBottom: 10}}
                     />
                 </View>
-
-                <FlatList
-                    keyboardShouldPersistTaps="handled"
-                    keyboardDismissMode="on-drag"
-                    data={data}
-                    showsVerticalScrollIndicator={false}
-                    keyExtractor={(item) => item.idMeal}
-                    renderItem={({item}) => (
-                        <View style={styles.item}>
-                            <Image source={{uri: item.strMealThumb}} style={styles.image}/>
-                            <Text style={styles.text}>{item.strMeal}</Text>
-                        </View>
-                    )}
-                    ListEmptyComponent={
-                        !loading && searchPhrase.length > 0 ? (
-                            <Text style={styles.noResultsText}>No meals found.</Text>
-                        ) : null
-                    }
-                />
-
-            </View>
-        </TouchableWithoutFeedback>
+            </TouchableWithoutFeedback>
+        </SafeAreaView>
     );
 };
 
 const styles = StyleSheet.create({
+    safeArea: {
+        flex: 1,
+        backgroundColor: "#fff",
+    },
     container: {
         justifyContent: "flex-start",
         alignItems: "center",
         flexDirection: "column",
         width: "100%",
+        flex: 1,
     },
     searchBar: {
         flexDirection: "row",
         width: "90%",
         height: 45,
-        marginTop: 25,
         backgroundColor: "#d9dbda",
         borderRadius: 15,
         alignItems: "center",
@@ -127,14 +136,12 @@ const styles = StyleSheet.create({
     crossIcon: {
         position: "absolute",
         right: 10,
-        opacity: 0,
     },
     item: {
         flexDirection: "row",
         alignItems: "center",
         padding: 10,
         width: 360,
-        borderBottomColor: "#ccc",
     },
     image: {
         width: 50,
@@ -156,6 +163,8 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: "gray",
     },
+    loader: {
+        marginTop: 20,
+    },
 });
-
 export default SearchBar;

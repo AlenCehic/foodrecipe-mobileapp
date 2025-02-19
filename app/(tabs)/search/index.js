@@ -45,7 +45,6 @@ const searchStyle = StyleSheet.create({
         flexDirection: "row",
         alignItems: "flex-start",
         width: "99%",
-        marginBottom: "5%",
     },
     logo: {
         width: 240,
