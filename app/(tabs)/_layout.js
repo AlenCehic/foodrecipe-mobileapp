@@ -1,5 +1,4 @@
 import { Tabs } from "expo-router";
-import Ionicons from "@expo/vector-icons/Ionicons"
 import { BottomNavIcon } from "../../components/BottomNavIcon";
 
 const tabs = [
@@ -21,7 +20,7 @@ const tabs = [
         icon: "heart-outline",
         iconFocused: "heart"
     }
-]
+];
 
 export default function TabsLayout() {
     return (
@@ -43,5 +42,5 @@ export default function TabsLayout() {
                 />
             ))}
         </Tabs>
-    )
+    );
 }

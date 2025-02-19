@@ -1,30 +1,18 @@
-import { View, Text, StyleSheet } from "react-native";
+import { StyleSheet, Text, View, FlatList, Alert } from "react-native";
+import RecipeList from "../../../components/RecipeList";
 
 export default function HomeScreen() {
-  return (
-    <View style={homeScreenStyle.container}>
-      <Text style={homeScreenStyle.title}>Home</Text>
-      <View style={homeScreenStyle.line} />
-      <Text>This is the Home Screen</Text>
-    </View>
-  )
+    return (
+        <View style={styles.container}>
+            <RecipeList apiUrl="https://www.themealdb.com/api/json/v1/1/random.php" />
+            <RecipeList apiUrl="https://www.themealdb.com/api/json/v1/1/random.php" />
+        </View>
+    )
 }
 
-const homeScreenStyle = StyleSheet.create({
-    container: {
-      flex: 1,
-      justifyContent: "center",
-      alignItems: "center"
-    },
-    title: {
-      fontSize: 22,
-      fontWeight: 'bold',
-    },
-    line: {
-      width: '60%',
-      height: 1,
-      backgroundColor: 'gray',
-      marginVertical: 10,
-      opacity: 0.5
-    }
-  })
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#fff"
+  }
+})
