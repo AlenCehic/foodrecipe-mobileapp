@@ -15,6 +15,6 @@ export default function CategoryDetail() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#f8f8f8",
+        backgroundColor: "#ffffff",
     },
 });

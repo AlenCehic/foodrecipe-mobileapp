@@ -57,7 +57,7 @@ export default function RecipeListItem({ item }) {
                         <Text style={styles.recipeCategory}>{item.strCategory}</Text>
                     </View>
                     <TouchableOpacity onPress={() => toggleFavorite(item)}>
-                        <Ionicons name={isFavorite ? "heart" : "heart-outline"} size={24} color="#FF5E00" style={styles.heartIcon} />
+                        <Ionicons name={isFavorite ? "heart" : "heart-outline"} size={22} color="#FF5E00" style={styles.heartIcon} />
                     </TouchableOpacity>
                 </>
             )}
@@ -70,38 +70,38 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "space-between",
-        padding: 14,
+        padding: 10,
         backgroundColor: "#fff",
-        borderRadius: 12,
+        borderRadius: 10,
         borderWidth: 1,
         borderColor: "#ddd",
         shadowColor: "#000",
-        shadowOffset: { width: 0, height: 2 },
+        shadowOffset: { width: 0, height: 1 },
         shadowOpacity: 0.1,
-        shadowRadius: 4,
-        elevation: 4,
+        shadowRadius: 3,
+        elevation: 3,
     },
     image: {
-        width: 90,
-        height: 90,
-        borderRadius: 12,
+        width: 70,
+        height: 70,
+        borderRadius: 10,
     },
     textContainer: {
         flex: 1,
-        marginLeft: 14,
+        marginLeft: 12,
     },
     recipeName: {
-        fontSize: 18,
+        fontSize: 16,
         fontWeight: "bold",
         color: "#333",
     },
     recipeCategory: {
-        fontSize: 14,
+        fontSize: 13,
         color: "#888",
-        marginTop: 4,
+        marginTop: 3,
     },
     heartIcon: {
-        marginRight: 10,
+        marginRight: 8,
     },
     loader: {
         flex: 1,

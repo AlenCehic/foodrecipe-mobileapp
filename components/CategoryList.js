@@ -51,7 +51,6 @@ export default function CategoryList() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        padding: 16,
-        backgroundColor: "#f8f8f8",
+        backgroundColor: "white",
     },
 })

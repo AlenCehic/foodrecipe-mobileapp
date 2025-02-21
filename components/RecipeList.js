@@ -38,7 +38,6 @@ export default function RecipeList({ apiUrl }) {
                     data={recipes}
                     renderItem={({ item }) => <RecipeListItem item={item} />}
                     keyExtractor={(item) => item.idMeal}
-                    contentContainerStyle={styles.listContainer}
                     showsVerticalScrollIndicator={false}
                     style={{ flex: 1 }}
                 />
@@ -50,11 +49,7 @@ export default function RecipeList({ apiUrl }) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        padding: 16,
-        backgroundColor: "#f8f8f8",
-    },
-    listContainer: {
-        paddingBottom: 20,
-        gap: 12,
-    },
+        padding: 8,
+        backgroundColor: "white",
+    }
 });
