@@ -24,7 +24,16 @@ const tabs = [
 
 export default function TabsLayout() {
     return (
-        <Tabs>
+        <Tabs
+            screenOptions={{
+                tabBarActiveTintColor: "#FF5E00",
+                tabBarInactiveTintColor: "#000000",
+                tabBarLabelStyle: {
+                    fontSize: 12,
+                    fontWeight: "bold",
+                },
+            }}
+        >
             {tabs.map(({ name, title, icon, iconFocused }) => (
                 <Tabs.Screen
                     key={name}

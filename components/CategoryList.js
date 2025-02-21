@@ -1,4 +1,3 @@
-// CategoryList.js
 import React, { useEffect, useState } from 'react';
 import { View, FlatList, Alert, StyleSheet } from 'react-native';
 import CategoryListItem from './CategoryListItem';

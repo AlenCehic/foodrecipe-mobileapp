@@ -3,13 +3,15 @@ import { View, StyleSheet } from "react-native";
 import RecipeList from "../components/RecipeList";
 
 export default function CategoryDetail() {
-    const { category } = useLocalSearchParams()
+    const { category } = useLocalSearchParams();
 
     return (
         <View style={styles.container}>
-            <RecipeList apiUrl={`https://www.themealdb.com/api/json/v1/1/filter.php?c=${category}`} />
+            <RecipeList
+                apiUrl={`https://www.themealdb.com/api/json/v1/1/filter.php?c=${category}`}
+            />
         </View>
-    )
+    );
 }
 
 const styles = StyleSheet.create({
@@ -18,4 +20,4 @@ const styles = StyleSheet.create({
         padding: 16,
         backgroundColor: "#f8f8f8",
     },
-})
+});
