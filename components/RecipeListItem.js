@@ -6,25 +6,25 @@ import { useState } from "react";
 import Spinner from "./Spinner";
 
 export default function RecipeListItem({ item }) {
-    const router = useRouter()
-    const { favorites, toggleFavorite } = useFavorites()
-    const [loading, setLoading] = useState(false)
+    const router = useRouter();
+    const { favorites, toggleFavorite } = useFavorites();
+    const [loading, setLoading] = useState(false);
 
-    const isFavorite = favorites.some((fav) => fav.idMeal === item.idMeal)
+    const isFavorite = favorites.some((fav) => fav.idMeal === item.idMeal);
 
     const fetchMealDetails = async () => {
-        setLoading(true)
+        setLoading(true);
         try {
-            const response = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${encodeURIComponent(item.strMeal)}`)
-            const data = await response.json()
+            const response = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${encodeURIComponent(item.strMeal)}`);
+            const data = await response.json();
 
             if (data.meals && data.meals.length > 0) {
-                const fullMeal = data.meals[0]
+                const fullMeal = data.meals[0];
 
                 router.push({
                     pathname: "/details",
                     params: {
-                        id: fullMeal.idMeal,
+                        idMeal: fullMeal.idMeal,
                         name: fullMeal.strMeal,
                         category: fullMeal.strCategory,
                         area: fullMeal.strArea,
@@ -33,7 +33,7 @@ export default function RecipeListItem({ item }) {
                         source: fullMeal.strSource || "",
                         youtube: fullMeal.strYoutube || "",
                     },
-                })
+                });
             } else {
                 alert("Meal details not found!");
             }
@@ -41,7 +41,7 @@ export default function RecipeListItem({ item }) {
             console.error("Error fetching meal details:", error);
             alert("Failed to fetch meal details.");
         } finally {
-            setLoading(false)
+            setLoading(false);
         }
     };
 
@@ -62,7 +62,7 @@ export default function RecipeListItem({ item }) {
                 </>
             )}
         </TouchableOpacity>
-    )
+    );
 }
 
 const styles = StyleSheet.create({
@@ -107,4 +107,4 @@ const styles = StyleSheet.create({
         flex: 1,
         alignSelf: "center",
     },
-})
+});

@@ -1,16 +1,37 @@
 import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, Linking } from "react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { useFavorites } from "../context/FavoritesContext";
 
 export default function DetailsScreen() {
-    const { id, name, category, area, instructions, image, source, youtube } = useLocalSearchParams();
+    const params = useLocalSearchParams();
     const router = useRouter();
+    const { favorites, toggleFavorite } = useFavorites();
+
+    const { idMeal, name, category, area, instructions, image, source, youtube } = params;
+
+    const mealItem = {
+        idMeal,
+        strMeal: name,
+        strCategory: category,
+        strArea: area,
+        strInstructions: instructions,
+        strMealThumb: image,
+        strSource: source,
+        strYoutube: youtube,
+    };
+
+    const isFavorite = favorites.some((fav) => fav.idMeal === idMeal);
 
     return (
         <ScrollView contentContainerStyle={styles.scrollContainer}>
             <Image source={{ uri: image }} style={styles.image} />
             <Text style={styles.title}>{name}</Text>
             <Text style={styles.subtitle}>{category} | {area}</Text>
+
+            <TouchableOpacity onPress={() => toggleFavorite(mealItem)}>
+                <Ionicons name={isFavorite ? "heart" : "heart-outline"} size={24} color="#FF5E00" style={styles.heartIcon} />
+            </TouchableOpacity>
 
             <Text style={styles.sectionTitle}>Instructions</Text>
             <Text style={styles.instructions}>{instructions}</Text>
@@ -37,6 +58,7 @@ export default function DetailsScreen() {
         </ScrollView>
     );
 }
+
 
 const styles = StyleSheet.create({
     scrollContainer: {
