@@ -13,6 +13,7 @@ import {
 } from "react-native";
 import {Feather, Entypo} from "@expo/vector-icons";
 import RecipeListItem from "./RecipeListItem";
+import Spinner from "./Spinner";
 
 const SearchBar = () => {
     const [searchPhrase, setSearchPhrase] = useState("");
@@ -76,7 +77,7 @@ const SearchBar = () => {
                         />
                     </View>
 
-                    {loading && <ActivityIndicator size="large" color="#FF5E00" style={styles.loader}/>}
+                    {loading && <Spinner />}
 
                     <FlatList
                         keyboardShouldPersistTaps="handled"
