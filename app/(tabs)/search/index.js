@@ -23,8 +23,8 @@ export default function HomeScreen() {
                     </View>
                     <View style={searchStyle.titleContainer}>
                         <Text style={searchStyle.title}>
-                            Hey<Text style={searchStyle.details}>!</Text>{"\n"}What are{"\n"}we cooking{"\n"}
-                            today<Text style={searchStyle.details}>?</Text>
+                            Hi Chef<Text style={searchStyle.details}>,</Text>{"\n"}Let's find{"\n"}something{"\n"}
+                            nice to cook<Text style={searchStyle.details}>!</Text>
                         </Text>
                     </View>
                 </View>
@@ -49,14 +49,14 @@ const searchStyle = StyleSheet.create({
     logo: {
         width: 240,
         height: 200,
-        marginRight: 10,
     },
     imageContainer: {
         top: "3%",
     },
     titleContainer: {
         flex: 1,
-        top: "20%"
+        top: "20%",
+        right: 7,
     },
     title: {
         fontSize: 24,

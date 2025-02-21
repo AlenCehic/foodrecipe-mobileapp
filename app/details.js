@@ -26,12 +26,15 @@ export default function DetailsScreen() {
     return (
         <ScrollView contentContainerStyle={styles.scrollContainer}>
             <Image source={{ uri: image }} style={styles.image} />
-            <Text style={styles.title}>{name}</Text>
-            <Text style={styles.subtitle}>{category} | {area}</Text>
 
-            <TouchableOpacity onPress={() => toggleFavorite(mealItem)}>
-                <Ionicons name={isFavorite ? "heart" : "heart-outline"} size={24} color="#FF5E00" style={styles.heartIcon} />
-            </TouchableOpacity>
+            <View style={styles.titleContainer}>
+                <Text style={styles.title} numberOfLines={2}>{name}</Text>
+                <TouchableOpacity onPress={() => toggleFavorite(mealItem)}>
+                    <Ionicons name={isFavorite ? "heart" : "heart-outline"} size={28} color="#FF5E00" style={styles.heartIcon} />
+                </TouchableOpacity>
+            </View>
+
+            <Text style={styles.subtitle}>{category} | {area}</Text>
 
             <Text style={styles.sectionTitle}>Instructions</Text>
             <Text style={styles.instructions}>{instructions}</Text>
@@ -59,7 +62,6 @@ export default function DetailsScreen() {
     );
 }
 
-
 const styles = StyleSheet.create({
     scrollContainer: {
         paddingBottom: 20,
@@ -72,17 +74,31 @@ const styles = StyleSheet.create({
         borderRadius: 15,
         marginBottom: 20,
     },
+    titleContainer: {
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
+        width: "100%",
+        paddingHorizontal: 16,
+    },
     title: {
         fontSize: 24,
         fontWeight: "bold",
-        textAlign: "center",
         color: "#333",
+        flexShrink: 1,
+        textAlign: "left",
+        width: "100%",
+    },
+    heartIcon: {
+        marginLeft: 10,
     },
     subtitle: {
         fontSize: 16,
-        textAlign: "center",
         color: "#666",
         marginBottom: 16,
+        textAlign: "left",
+        width: "100%",
+        paddingHorizontal: 16,
     },
     sectionTitle: {
         fontSize: 20,
@@ -90,12 +106,17 @@ const styles = StyleSheet.create({
         marginTop: 16,
         marginBottom: 8,
         color: "#444",
+        textAlign: "left",
+        width: "100%",
+        paddingHorizontal: 16,
     },
     instructions: {
         fontSize: 16,
         color: "#555",
         lineHeight: 24,
-        textAlign: "justify",
+        textAlign: "left",
+        width: "100%",
+        paddingHorizontal: 16,
     },
     buttonContainer: {
         marginTop: 20,
@@ -135,4 +156,3 @@ const styles = StyleSheet.create({
         marginLeft: 8,
     },
 });
-
