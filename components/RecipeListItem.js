@@ -3,6 +3,7 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import { useRouter } from "expo-router";
 import { useFavorites } from "../context/FavoritesContext";
 import { useState } from "react";
+import Spinner from "./Spinner";
 
 export default function RecipeListItem({ item }) {
     const router = useRouter();
@@ -47,7 +48,7 @@ export default function RecipeListItem({ item }) {
     return (
         <TouchableOpacity style={styles.container} onPress={fetchMealDetails} disabled={loading}>
             {loading ? (
-                <ActivityIndicator size="small" color="#FF5E00" style={styles.loader} />
+                <Spinner />
             ) : (
                 <>
                     <Image source={{ uri: item.strMealThumb }} style={styles.image} />
