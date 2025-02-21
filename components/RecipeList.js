@@ -40,6 +40,7 @@ export default function RecipeList({ apiUrl }) {
                     keyExtractor={(item) => item.idMeal}
                     contentContainerStyle={styles.listContainer}
                     showsVerticalScrollIndicator={false}
+                    style={{ flex: 1 }}
                 />
             )}
         </View>
@@ -57,4 +58,3 @@ const styles = StyleSheet.create({
         gap: 12,
     },
 });
-
