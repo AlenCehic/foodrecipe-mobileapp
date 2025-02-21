@@ -59,7 +59,7 @@ const searchStyle = StyleSheet.create({
         right: 7,
     },
     title: {
-        fontSize: 24,
+        fontSize: 22,
         fontWeight: "bold",
         textAlign: "left",
     },
