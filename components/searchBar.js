@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from "react";
+import { useRef } from "react";
 import {
     StyleSheet,
     TextInput,
@@ -22,12 +23,27 @@ const SearchBar = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
+    const debounceTimeout = useRef(null);
+
     useEffect(() => {
-        if (searchPhrase.length > 0) {
-            fetchData();
-        } else {
+        if (searchPhrase.length === 0) {
             setData([]);
+            return;
         }
+
+        if (debounceTimeout.current) {
+            clearTimeout(debounceTimeout.current);
+        }
+
+        debounceTimeout.current = setTimeout(() => {
+            fetchData();
+        }, 500);
+
+        return () => {
+            if (debounceTimeout.current) {
+                clearTimeout(debounceTimeout.current);
+            }
+        };
     }, [searchPhrase]);
 
     const fetchData = async () => {
